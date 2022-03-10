@@ -1,0 +1,74 @@
+/***
+this css has flash page styling
+***/
+
+/**
+general stuff
+**/
+main { display: flex }
+
+/**
+importer
+**/
+#import_head {
+	padding: 5px;
+	background: #282b3f;
+	height: 104px;
+	color: #a9c4c6;
+}
+#import_head>:nth-child(1) {
+    display: flex;
+    justify-content: space-between;
+}
+#import_head>:nth-child(1)>h3 { margin: 0 }
+#importer {
+	/* style */
+	background: #fff;
+	box-shadow: 0px 0px 8px 0 #00000028;
+	transition: 0.5s ease;
+	/* layout */
+	z-index: 1;
+	overflow: hidden;
+	width: 0;
+}
+/* queue */
+#importer-queue {
+	border-top: 1px solid #e2e7ed;
+}
+.importer_asset {
+	border-bottom: 1px solid #e2e7ed;
+	margin-bottom: 5px;
+}
+.asset_metadata {
+	background: #edf2f6;
+	display: flex;
+	padding: 7px;
+}
+/* asset icon */
+.asset_preview { height: 40px; margin-right: 6px }
+.importer_asset h4 {
+	margin: 0;
+	font-weight: bold;
+	font-size: 14px;
+}
+.importer_asset p {
+	color: #858e95;
+	font-weight: 400;
+	font-size: 12px;
+	margin: 0;
+}
+.import_as {
+	background: #fff;
+}
+.import_as a {
+	display: block;
+	padding: 5px 20px;
+	color: #505969;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 14px;
+	border-top: 1px solid #e2e7ed;
+}
+.import_as a:hover {
+	background: #f5f5f5;
+}

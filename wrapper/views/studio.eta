@@ -1,0 +1,65 @@
+<html>
+
+<head>
+	<title><% it.title %></title>
+	<link rel="stylesheet" type="text/css" href="/pages/css/modern-normalize.css">
+	<link rel="stylesheet" type="text/css" href="/pages/css/global.css">
+	<link rel="stylesheet" type="text/css" href="/pages/css/flash.css">
+	<script src="/pages/js/jquery.js"></script>
+	<script src="/pages/js/filesize.js"></script>
+	<style>
+		body {
+			background: #eee;
+		}
+	</style>
+</head>
+
+<body style="margin:0px">
+	<main style="display:flex">
+		<nav id="importer">
+			<nav id="import_head">
+				<div>
+					<h3 id="import-media">Import Media</h3>
+					<h3 id="close-button" onclick="hideImporter()">✖</h3>
+				</div>
+				<br />
+				<form>
+					<input id="importer-files" type="file" name="file" title="Upload Files" />
+				</form>
+			</nav>
+			<div id="importer-queue"></div>
+		</nav>
+		<%~ it.object %>
+		<script src="/pages/js/importer.js"></script>
+	</main>
+</body>
+
+<iframe style='display:none' name='dummy'></iframe>
+
+<form style='display:none' id='uploadbanner' enctype='multipart/form-data' method='post' action='/upload_asset'
+	target='dummy' onchanged='(this.files[0]!=undefined)&&sub.click()'><input id='fileupload' name='import'
+		type='file' /><input type='submit' value='submit' id='submit' /></form>
+
+<script>
+	interactiveTutorial = {
+		neverDisplay: function () {
+			return true
+		}
+	};
+
+	function studioLoaded(arg) {
+		console.log(arg)
+	}
+
+	function initPreviewPlayer(xml) {
+		confirm('Before proceeding, please make sure all your changes have been saved.') && window.open(
+			'player?movieId=' + flashvars.presaveId, 'MsgWindow', 'width=1280,height=720,left=' + (screen.width /
+				2 - 640) + ',top=' + (screen.height / 2 - 360))
+	};
+
+	function exitStudio() {
+		window.location = 'pages/html/list.html'
+	}
+</script>
+
+</html>

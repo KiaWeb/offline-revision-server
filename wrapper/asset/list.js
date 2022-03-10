@@ -73,6 +73,8 @@ async function listAssets(data) {
 
 module.exports = function (req, res, url) {
 	switch (url.path) {
+		case "/api_v2/assets/team":
+		case "/api_v2/assets/shared":
 		case "/api_v2/assets/imported": {
 			loadPost(req, res).then(data => listAssets(data.data)).then(a => {
 				res.setHeader("Content-Type", "application/json"), res.end(JSON.stringify(a));

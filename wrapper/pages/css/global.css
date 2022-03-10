@@ -30,6 +30,7 @@ header {
 	/* layout */
 	padding-bottom: 13px;
 	padding: 0 15px;
+	z-index: 1;
 	display: flex;
 	justify-content: space-between;
 	flex-shrink: 0;
@@ -72,6 +73,19 @@ header {
 }
 .button_big:hover {
 	text-decoration: underline;
+}
+
+/**
+warning
+**/
+.warning {
+	/* style */
+	background: linear-gradient(#ffa, #abab73);
+	/* layout */
+	font-size: 14px;
+	text-align: center;
+	padding: 10px 100px;
+	width: 100%;
 }
 
 

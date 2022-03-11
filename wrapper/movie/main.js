@@ -37,28 +37,11 @@ module.exports = {
 	},
 	loadZip(mId) {
 		return new Promise((res, rej) => {
-			const i = mId.indexOf('-');
-			const prefix = mId.substr(0, i);
-			const suffix = mId.substr(i + 1);
-			switch (prefix) {
-				case 'e': {
-					caché.clear(mId);
-					let data = fs.readFileSync(`${exFolder}/${suffix}.zip`);
-					res(data.subarray(data.indexOf(80)));
-					break;
-				}
-				case 'm': {
-					let numId = Number.parseInt(suffix);
-					if (isNaN(numId)) rej();
-					let filePath = fUtil.getFileIndex('movie-', '.xml', numId);
-					if (!fs.existsSync(filePath)) rej();
+			let filePath = `${folder}/${mId}.xml`;
+			if (!fs.existsSync(filePath)) rej("Movie doesn't exist.");
 
-					const buffer = fs.readFileSync(filePath);
-					parse.packXml(buffer, mId).then(v => res(v));
-					break;
-				}
-				default: rej();
-			}
+			const buffer = fs.readFileSync(filePath);
+			parse.packXml(buffer, mId).then(v => res(v));
 		});
 	},
 	loadXml(movieId) {

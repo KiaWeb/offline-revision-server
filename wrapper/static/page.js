@@ -1,6 +1,3 @@
-const sessions = require('../data/sessions');
-const fUtil = require('../fileUtil');
-const stuff = require('./info');
 const eta = require("eta");
 
 function toAttrString(table) {
@@ -21,6 +18,9 @@ module.exports = function (req, res, url) {
 	if (req.method != 'GET') return;
 	const query = url.query;
 
+	// parse urls for the lvm
+	const STORE_URL = process.env.STORE_URL.replace("127.0.0.1", "localhost");
+	const CLIENT_URL = process.env.CLIENT_URL.replace("127.0.0.1", "localhost");
 	var attrs, params, title, filename;
 	switch (url.pathname) {
 		case "/cc": {
@@ -49,8 +49,8 @@ module.exports = function (req, res, url) {
 					"ctc": "go",
 					"tlang": "en_US",
 					"apiserver": "/",
-					"storePath": process.env.STORE_URL + "/<store>",
-					"clientThemePath": process.env.CLIENT_URL + "/<client_theme>"
+					"storePath": STORE_URL + "/<store>",
+					"clientThemePath": CLIENT_URL + "/<client_theme>"
 				},
 				allowScriptAccess: "always",
 				movie: process.env.SWF_URL + "/cc.swf", // "http://localhost/cc.swf"
@@ -72,8 +72,8 @@ module.exports = function (req, res, url) {
 			params = {
 				flashvars: {
 					apiserver: "/",
-					storePath: process.env.STORE_URL + "/<store>",
-					clientThemePath: process.env.CLIENT_URL + "/<client_theme>",
+					storePath: STORE_URL + "/<store>",
+					clientThemePath: CLIENT_URL + "/<client_theme>",
 					original_asset_id: query["id"] || null,
 					themeId: "family",
 					ut: 60,
@@ -82,8 +82,8 @@ module.exports = function (req, res, url) {
 					siteId: "go",
 					m_mode: "school",
 					isLogin: "Y",
-                                        retut: 1,
-                                        goteam_draft_only: 1,
+					retut: 1,
+					goteam_draft_only: 1,
 					isEmbed: 1,
 					ctc: "go",
 					tlang: "en_US",
@@ -119,8 +119,8 @@ module.exports = function (req, res, url) {
 					tlang: "en_US",
 					ut: 60,
 					apiserver: "/",
-					storePath: process.env.STORE_URL + "/<store>",
-					clientThemePath: process.env.CLIENT_URL + "/<client_theme>",
+					storePath: STORE_URL + "/<store>",
+					clientThemePath: CLIENT_URL + "/<client_theme>",
 				},
 				allowScriptAccess: "always",
 			};
@@ -136,8 +136,8 @@ module.exports = function (req, res, url) {
 			};
 			params = {
 				flashvars: {
-					'apiserver': '/', 'storePath': process.env.STORE_URL + '/<store>', 'ut': 60,
-					'autostart': 1, 'isWide': 1, 'clientThemePath': process.env.CLIENT_URL + '/<client_theme>',
+					'apiserver': '/', 'storePath': STORE_URL + '/<store>', 'ut': 60,
+					'autostart': 1, 'isWide': 1, 'clientThemePath': CLIENT_URL + '/<client_theme>',
 				},
 				allowScriptAccess: 'always',
 				allowFullScreen: 'true',

@@ -1,4 +1,5 @@
 const themeFolder = process.env.THEME_FOLDER;
+const colder = process.env.CACHÉ_FOLDER;
 const mp3Duration = require('mp3-duration');
 const char = require('../character/main');
 const ttsInfo = require('../tts/info');
@@ -11,6 +12,7 @@ const nodezip = require('node-zip');
 const store = process.env.STORE_URL;
 const xmldoc = require('xmldoc');
 const fs = require('fs');
+const asset = require('../asset/main');
 
 function name2Font(font) {
 	switch (font) {
@@ -257,7 +259,16 @@ module.exports = {
 								var pieces = val.split(".");
 
 								if (pieces[0] == "ugc") {
-									// TODO: Make custom props load.
+									var ext = pieces.pop();
+									pieces.splice(1, 0, tag)
+									pieces[2] += `.${ext}`;
+
+									var fileName = pieces.join(".");
+									if (!zip[fileName]) {
+										var buff = asset.load(pieces[2]);
+										fUtil.addToZip(zip, fileName, buff);
+										themes[pieces[0]] = true;
+									}
 								} else {
 									var ext = pieces.pop();
 									pieces.splice(1, 0, tag);

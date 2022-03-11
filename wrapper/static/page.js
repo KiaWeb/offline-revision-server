@@ -19,6 +19,7 @@ module.exports = function (req, res, url) {
 	const query = url.query;
 
 	// parse urls for the lvm
+	const SWF_URL = process.env.SWF_URL.replace("127.0.0.1", "localhost");
 	const STORE_URL = process.env.STORE_URL.replace("127.0.0.1", "localhost");
 	const CLIENT_URL = process.env.CLIENT_URL.replace("127.0.0.1", "localhost");
 	var attrs, params, title, filename;
@@ -27,7 +28,7 @@ module.exports = function (req, res, url) {
 			title = "Character Creator";
 			filename = "char";
 			attrs = {
-				data: process.env.SWF_URL + "/cc.swf", // data: "cc.swf",
+				data: SWF_URL + "/cc.swf", // data: "cc.swf",
 				type: "application/x-shockwave-flash", 
 				id: "char_creator", 
 				width: "960", 
@@ -53,7 +54,7 @@ module.exports = function (req, res, url) {
 					"clientThemePath": CLIENT_URL + "/<client_theme>"
 				},
 				allowScriptAccess: "always",
-				movie: process.env.SWF_URL + "/cc.swf", // "http://localhost/cc.swf"
+				movie: SWF_URL + "/cc.swf", // "http://localhost/cc.swf"
 			};
 			break;
 		}
@@ -62,7 +63,7 @@ module.exports = function (req, res, url) {
 			title = "CC Browser";
 			filename = "char";
 			attrs = {
-				data: process.env.SWF_URL + "/cc_browser.swf", // data: 'cc_browser.swf',
+				data: SWF_URL + "/cc_browser.swf", // data: 'cc_browser.swf',
 				type: "application/x-shockwave-flash",
 				id: "char_creator",
 				width: '100%', 
@@ -90,7 +91,7 @@ module.exports = function (req, res, url) {
 					lid: 13,
 				},
 				allowScriptAccess: "always",
-				movie: process.env.SWF_URL + "/cc_browser.swf", // 'http://localhost/cc_browser.swf'
+				movie: SWF_URL + "/cc_browser.swf", // 'http://localhost/cc_browser.swf'
 			};
 			break;
 		}
@@ -99,7 +100,7 @@ module.exports = function (req, res, url) {
 			title = "Video Editor";
 			filename = "studio";
 			attrs = {
-				data: process.env.SWF_URL + "/go_full.swf",
+				data: SWF_URL + "/go_full.swf",
 				type: "application/x-shockwave-flash", width: "100%", height: "100%",
 			};
 			params = {
@@ -131,7 +132,7 @@ module.exports = function (req, res, url) {
 			title = 'Video Player';
 			filename = "player";
 			attrs = {
-				data: process.env.SWF_URL + '/player.swf',
+				data: SWF_URL + '/player.swf',
 				type: 'application/x-shockwave-flash', width: '100%', height: '100%',
 			};
 			params = {

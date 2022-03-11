@@ -9,12 +9,15 @@ module.exports = function (req, res, url) {
 			return res.end("0");
 
 		var body = Buffer.from(data.body_zip, "base64");
-		console.log(data)
 		var thumb = Buffer.from(data.thumbnail_large, "base64");
 		movie
 			.save(body, thumb, data.movieId || null)
 			.then(nId => res.end("0" + nId))
-			.catch(e => res.end("1"));
+			.catch(err => {
+				if (process.env.NODE_ENV == "dev") throw err;
+				console.error("Error saving movie: " + err)
+				res.end("1")
+			});
 	});
 	return true;
 

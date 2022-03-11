@@ -22,13 +22,15 @@ module.exports = {
 			}
 			id ||= fUtil.generateId();
 
+			// save the thumbnail
+			fs.writeFileSync(`${folder}/${id}.png`, thumb);
+			// extract the movie xml and save it
 			const zip = nodezip.unzip(movieZip);
-			let path = fUtil.getFileIndex('movie-', '.xml', suffix);
-			let writeStream = fs.createWriteStream(path);
+			let writeStream = fs.createWriteStream(`${folder}/${id}.xml`);
 			parse.unpackZip(zip, thumb, id).then(data => {
 				writeStream.write(data, () => {
 					writeStream.close();
-					res(nëwId);
+					res(id);
 				});
 			});
 		});
@@ -81,28 +83,26 @@ module.exports = {
 			}
 		});
 	},
-	thumb(movieId) {
+	thumb(mId) {
 		return new Promise((res, rej) => {
-			if (!movieId.startsWith('m-')) return;
-			const n = Number.parseInt(movieId.substr(2));
-			const fn = fUtil.getFileIndex('thumb-', '.png', n);
-			isNaN(n) ? rej() : res(fs.readFileSync(fn));
+			const fn = `${folder}/${mId}.png`;
+			res(fs.readFileSync(fn));
 		});
 	},
 	list() {
 		const array = [];
-		const last = fUtil.getLastFileIndex('movie-', '.xml');
-		for (let c = last; c >= 0; c--) {
-			const movie = fs.existsSync(fUtil.getFileIndex('movie-', '.xml', c));
-			const thumb = fs.existsSync(fUtil.getFileIndex('thumb-', '.png', c));
-			if (movie && thumb) array.push(`m-${c}`);
-		}
+		fs.readdirSync(folder).forEach(fn => {
+			if (!fn.includes(".xml")) return;
+			const mId = fn.substring(0, fn.length - 4);
+			const movie = fs.existsSync(`${folder}/${mId}.xml`);
+			const thumb = fs.existsSync(`${folder}/${mId}.png`);
+			if (movie && thumb) array.push(mId);
+		});
+		console.log(array)
 		return array;
 	},
-	async meta(movieId) {
-		if (!movieId.startsWith('m-')) return;
-		const n = Number.parseInt(movieId.substr(2));
-		const fn = fUtil.getFileIndex('movie-', '.xml', n);
+	async meta(mId) {
+		const fn = `${folder}/${mId}.xml`;
 
 		const fd = fs.openSync(fn, 'r');
 		const buffer = Buffer.alloc(256);
@@ -125,7 +125,7 @@ module.exports = {
 			durationString: durationStr,
 			duration: duration,
 			title: title,
-			id: movieId,
+			id: mId,
 		};
 	},
 }

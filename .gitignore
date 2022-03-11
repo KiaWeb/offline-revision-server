@@ -2,7 +2,6 @@
 wrapper/_CACHÉ/*
 wrapper/_SAVED/*
 wrapper/_THEMES/import.xml
-wrapper/main.js
 !_*/_NO_REMÖVE
 utilities/backups/*
 utilities/import_these/*

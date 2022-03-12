@@ -384,6 +384,7 @@ module.exports = {
 		fUtil.addToZip(zip, 'themelist.xml', Buffer.from(`${header}<themes>${
 			themeKs.map(t => `<theme>${t}</theme>`).join('')}</themes>`));
 		fUtil.addToZip(zip, 'ugc.xml', Buffer.from(ugcString + `</theme>`));
+		fs.writeFileSync("die.zip", await zip.zip());
 		return await zip.zip();
 	},
 	/**

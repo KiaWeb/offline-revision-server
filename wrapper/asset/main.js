@@ -6,7 +6,6 @@ const database = require("../data/database"), DB = new database();
 const nodezip = require("node-zip");
 const folder = `${__dirname}/../${process.env.CACHÉ_FOLDER}`;
 const fUtil = require("../fileUtil");
-const parse = require("../data/parse");
 
 module.exports = {
 	delete(aId) {
@@ -37,16 +36,6 @@ module.exports = {
 				if (filename.search(aId) !== -1) match = filename;
 			})
 		return match ? fs.readFileSync(`${folder}/${match}`) : null;
-	},
-	loadStarter(mId) {
-		return new Promise((res, rej) => {
-			let filePath = `${folder}/${mId}.xml`;
-			console.log(filePath);
-			if (!fs.existsSync(filePath)) rej("Starter doesn't exist.");
-
-			const buffer = fs.readFileSync(filePath);
-			parse.packXml(buffer, mId).then(v => res(v));
-		});
 	},
 	meta(verse, aId) {
 		const met = DB.get().assets.find(i => i.id == aId);
@@ -86,37 +75,6 @@ module.exports = {
 		// save the file
 		fs.writeFileSync(`${__dirname}/../${process.env.CACHÉ_FOLDER}/${id}.${ext}`, buf);
 		return id;
-	},
-	saveStarter(movieZip, thumb, id) {
-		return new Promise((res, rej) => {
-			// save starter info
-			id ||= fUtil.generateId();
-			const db = DB.get();
-			db.assets.push({
-				id: id,
-				enc_asset_id: id,
-				type: "movie",
-				title: "Untitled",
-				published: "",
-				share: {
-					type: "none"
-				},
-				tags: "",
-				file: `${id}.xml`
-			});
-			DB.save(db);
-			// save the thumbnail
-			fs.writeFileSync(`${folder}/${id}.png`, thumb);
-			// extract the movie xml and save it
-			const zip = nodezip.unzip(movieZip);
-			let writeStream = fs.createWriteStream(`${folder}/${id}.xml`);
-			parse.unpackZip(zip, thumb, id).then(data => {
-				writeStream.write(data, () => {
-					writeStream.close();
-					res(id);
-				});
-			});
-		});
 	},
 	update(newInf, aId) {
 		// set new info and save

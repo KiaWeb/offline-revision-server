@@ -20,8 +20,9 @@ const pmc = require("./character/premade");
 const chl = require("./character/load");
 const chs = require("./character/save");
 const chu = require("./character/upload");
-const stl = require("./static/load");
-const stp = require("./static/page");
+const sts = require("./starter/save");
+const Stl = require("./static/load");
+const Stp = require("./static/page");
 const mvl = require("./movie/load");
 const mvL = require("./movie/list");
 const mvm = require("./movie/meta");
@@ -45,8 +46,9 @@ const functions = [
 	chl,
 	chs,
 	chu,
-	stl,
-	stp,
+	sts,
+	Stl,
+	Stp,
 	mvl,
 	mvL,
 	mvm,

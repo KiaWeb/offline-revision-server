@@ -45,7 +45,7 @@ async function listAssets(data) {
 				"status": "ok",
 				"data": {
 					"xml": `${header}<ugc more="0">${files
-						.map(v => `<movie id="${v.file}" enc_asset_id="${v.id}" path="/_SAVED/${v.id}" numScene="1" title="${v.name}" thumbnail_url="/assets0/${v.id}.png"><tags></tags></movie>`)
+						.map(v => `<movie id="${v.id}" enc_asset_id="${v.id}" path="/_SAVED/${v.id}" numScene="1" title="${v.name}" thumbnail_url="/assets/${v.id}.png"><tags></tags></movie>`)
 						.join("")}</ugc>`
 				}
 			};

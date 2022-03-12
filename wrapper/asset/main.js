@@ -38,6 +38,16 @@ module.exports = {
 			})
 		return match ? fs.readFileSync(`${folder}/${match}`) : null;
 	},
+	loadStarter(mId) {
+		return new Promise((res, rej) => {
+			let filePath = `${folder}/${mId}.xml`;
+			console.log(filePath);
+			if (!fs.existsSync(filePath)) rej("Starter doesn't exist.");
+
+			const buffer = fs.readFileSync(filePath);
+			parse.packXml(buffer, mId).then(v => res(v));
+		});
+	},
 	meta(verse, aId) {
 		const met = DB.get().assets.find(i => i.id == aId);
 		if (!met) {

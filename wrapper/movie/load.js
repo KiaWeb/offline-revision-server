@@ -2,7 +2,7 @@
  * movie load route
  */
 const movie = require("./main");
-const asset = require("../asset/main");
+const starter = require("../starter/main");
 const base = Buffer.alloc(1, 0);
 
 module.exports = function (req, res, url) {
@@ -35,8 +35,8 @@ module.exports = function (req, res, url) {
 				.loadZip(url.query.movieId)
 				.then(b => res.end(Buffer.concat([base, b])))
 				.catch(err => {
-					asset // try starter
-						.loadStarter(url.query.movieId)
+					starter // try starter
+						.load(url.query.movieId)
 						.then(b => res.end(Buffer.concat([base, b])))
 						.catch(err => { // error
 							if (process.env.NODE_ENV == "dev") throw err;

@@ -1,9 +1,26 @@
 const importer = $("#importer");
+const previewer = $("#previewer");
 const studio = $("#obj");
 
 /**
-show and hide
-**/
+ * studio functions
+ */
+ interactiveTutorial = { // hide interactive tutorial
+	neverDisplay: function() {
+		return true;
+	}
+};
+function studioLoaded(arg) { console.log(arg) }
+function exitStudio() { window.location = "/" }
+// prevent unwanted closing
+window.onbeforeunload = function() {
+	const response = confirm("Are you sure you want to exit the studio? Make sure your work is saved.")
+	return (response) ? true : false
+};
+
+/**
+ * show and hide widgets
+ */
 let importerVisible = false;
 function showImporter() {
 	switch(importerVisible) {
@@ -26,10 +43,22 @@ function hideImporter() {
 	importerVisible = false;
 	importer.css("width", "");
 }
+function initPreviewPlayer(dataXmlStr, startFrame, containsChapter, themeList) {
+	movieDataXmlStr = dataXmlStr;
+	filmXmlStr = dataXmlStr.split("<filmxml>")[1].split("</filmxml>")[0];
+	hideImporter(); // hide importer before previewing
+	previewer.css("display", "block");
+	studio.css("height", "0");
+}
+function retrievePreviewPlayerData() { return movieDataXmlStr }
+function hidePreviewer() {
+	previewer.css("display", "none");
+	studio.css("height", "");
+}
 
 /**
-imports media
-**/
+ * importer
+ */
 class AssetImporter {
 	constructor(importer) {
 		this.importer = importer;

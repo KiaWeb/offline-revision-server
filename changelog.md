@@ -8,6 +8,7 @@ This changelog is based off [Keep a Changelog](https://keepachangelog.com) and ~
   - Better method of passing config.bat settings to node
   - File importing (finally!)
   - Starters
+  - Video previewer
   - JSON support for POST body parser
   - Local database for asset info
   - Better logging to the console/error catching

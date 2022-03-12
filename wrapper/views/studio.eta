@@ -30,36 +30,25 @@
 			<div id="importer-queue"></div>
 		</nav>
 		<%~ it.object %>
-		<script src="/pages/js/importer.js"></script>
 	</main>
+	<div id="previewer" style="display:none">
+		<div id="preview_head">
+			<h2 id="preview-video">Preview Video</h2>
+			<h2 class="close-button" onclick="hidePreviewer()">✖</h2>
+		</div>
+		<object id="preview_player" data="https://localhost:4664/animation/414827163ad4eb60/player.swf" type="application/x-shockwave-flash" width="800" height="450">
+			<param name="flashvars" value="apiserver=/&amp;isEmbed=1&amp;tlang=en_US&amp;isInitFromExternal=1&amp;startFrame=previewStartFrame&amp;autostart=1&amp;storePath=https://localhost:4664/store/3a981f5cb2739137/&lt;store&gt;&amp;clientThemePath=https://localhost:4664/static/ad44370a650793d9/&lt;client_theme&gt;" />
+			<param name="allowScriptAccess" value="always" />
+			<param name="allowFullScreen" value="true" />
+		</object>
+	</div>
 </body>
+<script src="/pages/js/studio.js"></script>
 
 <iframe style='display:none' name='dummy'></iframe>
 
 <form style='display:none' id='uploadbanner' enctype='multipart/form-data' method='post' action='/upload_asset'
 	target='dummy' onchanged='(this.files[0]!=undefined)&&sub.click()'><input id='fileupload' name='import'
 		type='file' /><input type='submit' value='submit' id='submit' /></form>
-
-<script>
-	interactiveTutorial = {
-		neverDisplay: function () {
-			return true
-		}
-	};
-
-	function studioLoaded(arg) {
-		console.log(arg)
-	}
-
-	function initPreviewPlayer(xml) {
-		confirm('Before proceeding, please make sure all your changes have been saved.') && window.open(
-			'player?movieId=' + flashvars.presaveId, 'MsgWindow', 'width=1280,height=720,left=' + (screen.width /
-				2 - 640) + ',top=' + (screen.height / 2 - 360))
-	};
-
-	function exitStudio() {
-		window.location = 'pages/html/list.html'
-	}
-</script>
 
 </html>

@@ -76,7 +76,12 @@ async function listAssets(data) {
 			break;
 		}
 		default: { // no type? send a blank response
-			response = `${header}<ugc more="0"></ugc>`;
+			response = {
+				"status": "ok",
+				"data": {
+					"xml": `${header}<ugc more="0"></ugc>`
+				}
+			};
 			break;
 		}
 	};

@@ -9,7 +9,7 @@ module.exports = class {
 		// create the file if it doesn't exist
 		if (!fs.existsSync(this.path)) {
 			console.error("Database doesn't exist! Creating...")
-			this.save(this.path, "{\"assets\":[]}")
+			this.save(this.path, { assets: [] })
 		}
 		try {
 			this.refresh();

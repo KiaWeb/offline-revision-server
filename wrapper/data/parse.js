@@ -134,6 +134,34 @@ function name2Font(font) {
 	}
 }
 
+function meta2Xml(m) {
+	var response;
+	const v = m.data;
+	switch (v.type) {
+		case "char": {
+			response = `<char id="${v.id}" enc_asset_id="${v.id}" name="Untitled" cc_theme_id="${v.themeId}" thumbnail_url="char_default.png" copyable="Y"><tags>${v.tags}</tags></char>`;
+			break;
+		}
+		case "bg": {
+			response = `<background subtype="0" id="${v.file}" enc_asset_id="${v.id}" name="${v.title}" enable="Y" asset_url="/assets/${v.file}"/>`
+			break;
+		}
+		case "movie": {
+			response = `<movie id="${v.id}" enc_asset_id="${v.id}" path="/_SAVED/${v.id}" numScene="1" title="${v.name}" thumbnail_url="/assets/${v.id}.png"><tags></tags></movie>`;
+			break;
+		}
+		case "prop": {
+			if (v.subtype == "video") {
+				response = `<prop subtype="video" id="${v.file}" enc_asset_id="${v.id}" name="${v.title}" enable="Y" holdable="0" headable="0" placeable="1" facing="left" width="0" height="0" asset_url="/api_v2/assets/${v.file}"/>`;
+			} else {
+				response = `<prop subtype="0" id="${v.file}" enc_asset_id="${v.id}" name="${v.title}" enable="Y" holdable="0" headable="0" placeable="1" facing="left" width="0" height="0" asset_url="/api_v2/assets/${v.file}"/>`;
+			}
+			break;
+		}
+	};
+	return response;
+}
+
 function useBase64(aId) {
 	switch (aId.substr(aId.lastIndexOf('.') + 1)) {
 		case 'xml':
@@ -165,7 +193,6 @@ module.exports = {
 		if (xmlBuffer.length == 0) throw null;
 
 		const zip = nodezip.create();
-		mId && caché.saveTable(mId);
 		const themes = { common: true }, assetTypes = {};
 		var ugcString = `${header}<theme id="ugc" name="ugc">`;
 		fUtil.addToZip(zip, 'movie.xml', xmlBuffer);
@@ -261,12 +288,13 @@ module.exports = {
 								if (pieces[0] == "ugc") {
 									var ext = pieces.pop();
 									pieces.splice(1, 0, tag)
-									pieces[2] += `.${ext}`;
 
-									var fileName = pieces.join(".");
+									var fileName = pieces.join(".") + `.${ext}`;
 									if (!zip[fileName]) {
 										var buff = asset.load(pieces[2]);
+										var meta = asset.meta(false, pieces[2]);
 										fUtil.addToZip(zip, fileName, buff);
+										ugcString += meta2Xml(meta);
 										themes[pieces[0]] = true;
 									}
 								} else {

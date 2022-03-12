@@ -45,11 +45,7 @@ module.exports = {
 		}
 		return { // return only the important metadata
 			status: "ok",
-			data: {
-				published: met.published,
-				share: met.share,
-				tags: met.tags
-			}
+			data: met
 		};
 	},
 	save(buf, { type, subtype, title, duration, ext, tId }) {

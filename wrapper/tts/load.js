@@ -61,26 +61,26 @@ function processVoice(voiceName, text) {
 			/* WARNING: NUANCE TTS API HAS BACKGROUND MUSIC
 
 
-			   shut up xomdjl ~tetra
+			shut up xomdjl ~tetra
 			*/
-            case "nuance": {
-                var q = new URLSearchParams({
-                    voice_name: voice.arg,
-                    speak_text: text,
-                }).toString();
-                https.get({
-                        host: "voicedemo.codefactoryglobal.com",
-                        path: `/generate_audio.asp?${q}`,
-                    },
-                    (r) => {
-                        var buffers = [];
-                        r.on("data", (d) => buffers.push(d));
-                        r.on("end", () => res(Buffer.concat(buffers)));
-                        r.on("error", rej);
-                    }
-                );
-                break;
-            }
+			case "nuance": {
+				var q = new URLSearchParams({
+					voice_name: voice.arg,
+					speak_text: text,
+				}).toString();
+				https.get({
+						host: "voicedemo.codefactoryglobal.com",
+						path: `/generate_audio.asp?${q}`,
+					},
+					(r) => {
+						var buffers = [];
+						r.on("data", (d) => buffers.push(d));
+						r.on("end", () => res(Buffer.concat(buffers)));
+						r.on("error", rej);
+					}
+				);
+				break;
+			}
 			case "cepstral": {
 				https.get('https://www.cepstral.com/en/demos', r => {
 					const cookie = r.headers['set-cookie'];
@@ -212,42 +212,76 @@ function processVoice(voiceName, text) {
 				);
 				break;
 			} */
-            case "acapela": {
-                var buffers = [];
-                var req = https.request({
-                        hostname: "acapela-box.com",
-                        path: "/AcaBox/dovaas.php",
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-							Cookie: "AcaBoxLogged=logged; AcaBoxUsername=goaniwrap; acabox=92s39r5vu676g5ekqehbu2o0f2; AcaBoxFirstname=Keegan",
-							Origin: "https://acapela-box.com",
-                            Referer: "https://acapela-box.com/AcaBox/index.php",
-							"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36",
-                        },
-                    },
-                    (r) => {
-                        r.on("data", (b) => buffers.push(b));
-                        r.on("end", () => {
-                            var json = JSON.parse(Buffer.concat(buffers));
-							get(`${json.snd_url}`).then(res).catch(rej);
-                        });
-                    }
-                );
-                req.write(new URLSearchParams({
-                    text: text,
-                    voice: voice.arg,
-					listen: 1,
-					format: "MP3",
-					codecMP3: 1,
-					spd: 180,
-					vct: 100,
-					byline: 0,
-					ts: 666
-                }).toString());
-                req.end();
-                break;
-            }
+			case "acapela": {
+				var buffers = [];
+				var acapelaArray = [];
+				for (var c = 0; c < 15; c++) acapelaArray.push(~~(65 + Math.random() * 26));
+				var email = `${String.fromCharCode.apply(null, acapelaArray)}@gmail.com`;
+				var req = https.request(
+					{
+						hostname: "acapelavoices.acapela-group.com",
+						path: "/index/getnonce",
+						method: "POST",
+						headers: {
+							"Content-Type": "application/x-www-form-urlencoded",
+						},
+					},
+					(r) => {
+						r.on("data", (b) => buffers.push(b));
+						r.on("end", () => {
+							var nonce = JSON.parse(Buffer.concat(buffers)).nonce;
+							var req = http.request(
+								{
+									hostname: "acapela-group.com",
+									port: "8080",
+									path: "/webservices/1-34-01-Mobility/Synthesizer",
+									method: "POST",
+									headers: {
+										"Content-Type": "application/x-www-form-urlencoded",
+									},
+								},
+								(r) => {
+									var buffers = [];
+									r.on("data", (d) => buffers.push(d));
+									r.on("end", () => {
+										const html = Buffer.concat(buffers);
+										const beg = html.indexOf("&snd_url=") + 9;
+										const end = html.indexOf("&", beg);
+										const sub = html.subarray(beg, end).toString();
+										http.get(sub, (r) => {
+											r.on("data", (d) => buffers.push(d));
+											r.on("end", () => {
+												res(Buffer.concat(buffers));
+											});
+										});
+									});
+									r.on("error", rej);
+								}
+							);
+							req.end(
+								new URLSearchParams({
+									req_voice: voice.arg,
+									cl_pwd: "",
+									cl_vers: "1-30",
+									req_echo: "ON",
+									cl_login: "AcapelaGroup",
+									req_comment: `{"nonce":"${nonce}","user":"${email}"}`,
+									req_text: text,
+									cl_env: "ACAPELA_VOICES",
+									prot_vers: 2,
+									cl_app: "AcapelaGroup_WebDemo_Android",
+								}).toString()
+							);
+						});
+					}
+				);
+				req.end(
+					new URLSearchParams({
+						json: `{"googleid":"${email}"`,
+					}).toString()
+				);
+				break;
+			}
 			case "acapelaOld": {
 				var q = new URLSearchParams({
 					inputText: base64.encode(text),
@@ -416,9 +450,11 @@ function processVoice(voiceName, text) {
 						r.on("data", (d) => buffers.push(d));
 						r.on("end", () => {
 							const xml = String.fromCharCode.apply(null, brotli.decompress(Buffer.concat(buffers)));
-							const beg = xml.indexOf("https://cerevoice.s3.amazonaws.com/");
-							const end = xml.indexOf(".mp3", beg) + 4;
-							const loc = xml.substr(beg, end - beg).toString();
+							console.log(xml)
+							const beg = xml.indexOf("<url>") + 5;
+							const end = xml.indexOf("</url>", beg);
+							const loc = xml.substr(beg, end).toString();
+							console.log(loc)
 							get(loc).then(res).catch(rej);
 						});
 						r.on("error", rej);

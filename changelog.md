@@ -24,6 +24,7 @@ This changelog is based off [Keep a Changelog](https://keepachangelog.com) and ~
   - Node.js installer is now 17.6.0
 ### Fixed
   - Polly voices
+  - Acapela voices (thanks VisualPlugin!)
   - Character scaling from the CC
   - Node crash windows now let you type into them
 

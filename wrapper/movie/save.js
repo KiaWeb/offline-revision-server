@@ -8,7 +8,7 @@ module.exports = function (req, res, url) {
 		if (trigAutosave && !data.movieId) return res.end("0");
 
 		var body = Buffer.from(data.body_zip, "base64");
-		var thumb = Buffer.from(data.thumbnail_large, "base64");
+		var thumb = trigAutosave ? null : Buffer.from(data.thumbnail_large, "base64");
 		movie
 			.save(body, thumb, data.movieId || null)
 			.then(nId => res.end("0" + nId))

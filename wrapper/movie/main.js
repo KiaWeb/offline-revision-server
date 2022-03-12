@@ -18,7 +18,7 @@ module.exports = {
 			id ||= fUtil.generateId();
 
 			// save the thumbnail
-			fs.writeFileSync(`${folder}/${id}.png`, thumb);
+			if (thumb) fs.writeFileSync(`${folder}/${id}.png`, thumb);
 			// extract the movie xml and save it
 			const zip = nodezip.unzip(movieZip);
 			let writeStream = fs.createWriteStream(`${folder}/${id}.xml`);

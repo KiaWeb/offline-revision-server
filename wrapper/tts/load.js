@@ -142,27 +142,6 @@ function processVoice(voiceName, text) {
 				);
 				break;
 			}
-			case "watson": {
-				var q = new URLSearchParams({
-					text: text,
-					voice: voice.arg,
-					download: true,
-					accept: "audio/mp3",
-				}).toString();
-				https.get(
-					{
-						host: "text-to-speech-demo.ng.bluemix.net",
-						path: `/api/v3/synthesize?${q}`,
-					},
-					(r) => {
-						var buffers = [];
-						r.on("data", (d) => buffers.push(d));
-						r.on("end", () => res(Buffer.concat(buffers)));
-						r.on("error", rej);
-					}
-				);
-				break;
-			}
 			/* case "acapela": {
 				var buffers = [];
 				var acapelaArray = [];
@@ -331,31 +310,6 @@ function processVoice(voiceName, text) {
 				);
 				break;
 			}
-			case "wavenet": {
-                var req = https.request({
-                        hostname: "texttospeechapi.wideo.co",
-                        path: "/api/wideo-text-to-speech",
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-							Origin: "https://texttospeech.wideo.co",
-							Referer: "https://texttospeech.wideo.co/",
-							"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36",
-                        },
-                    },
-                    (r) => {
-						var buffers = [];
-						r.on("data", (b) => buffers.push(b));
-                        r.on("end", () => {
-							var json = JSON.parse(Buffer.concat(buffers));
-							get(`${json.url}`).then(res).catch(rej);
-						});
-						r.on("error", rej);
-					});
-					req.write(`{"data":{"text":"${text}","speed":1,"voice":"${voice.arg}"}}`);
-					req.end();
-					break;
-			}
 			/*
 			case "acapela": {
 				var q = new URLSearchParams({
@@ -486,9 +440,16 @@ module.exports = function (req, res, url) {
 			mp3Duration(buffer, (e, duration) => {
 				if (e || !duration) return res.end(1 + process.env.FAILURE_XML);
 
-				const title = `[${voices[data.voice].desc}] ${data.text}`;
-				const id = asset.saveLocal(buffer, data.presaveId, '-tts.mp3');
-				res.end(`0<response><asset><id>${id}</id><enc_asset_id>${id}</enc_asset_id><type>sound</type><subtype>tts</subtype><title>${title}</title><published>0</published><tags></tags><duration>${1e3 * duration}</duration><downloadtype>progressive</downloadtype><file>${id}</file></asset></response>`)
+				const meta = {
+					type: "sound",
+					subtype: "tts",
+					title: `[${voices[data.voice].desc}] ${data.text}`,
+					duration: 1e3 * duration,
+					ext: "mp3",
+					tId: "ugc"
+				}
+				const id = asset.save(buffer, meta);
+				res.end(`0<response><asset><id>${id}.mp3</id><enc_asset_id>${id}</enc_asset_id><type>sound</type><subtype>tts</subtype><title>${meta.title}</title><published>0</published><tags></tags><duration>${meta.duration}</duration><downloadtype>progressive</downloadtype><file>${id}</file></asset></response>`)
 			});
 		});
 	});

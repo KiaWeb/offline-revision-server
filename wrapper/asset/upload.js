@@ -14,8 +14,9 @@ module.exports = function (req, res, url) {
 		const meta = {
 			type: f.type,
 			subtype: f.subtype,
-			title: name.substr(0, name.lastIndexOf(".")),
-			ext: name.substr(name.lastIndexOf(".") + 1),
+			title: name.substring(0, name.lastIndexOf(".")),
+			duration: null,
+			ext: name.substring(name.lastIndexOf(".") + 1),
 			tId: "ugc"
 		}
 		asset.save(buffer, meta);

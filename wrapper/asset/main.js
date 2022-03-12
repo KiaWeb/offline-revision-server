@@ -51,7 +51,7 @@ module.exports = {
 			}
 		};
 	},
-	save(buf, { type, subtype, title, ext, tId }) {
+	save(buf, { type, subtype, title, duration, ext, tId }) {
 		// save asset info
 		const id = fUtil.generateId();
 		const db = DB.get();
@@ -67,11 +67,13 @@ module.exports = {
 				type: "none"
 			},
 			tags: "",
+			duration: duration,
 			file: `${id}.${ext}`
 		});
 		DB.save(db);
 		// save the file
 		fs.writeFileSync(`${__dirname}/../${process.env.CACHÉ_FOLDER}/${id}.${ext}`, buf);
+		return id;
 	},
 	update(newInf, aId) {
 		// set new info and save

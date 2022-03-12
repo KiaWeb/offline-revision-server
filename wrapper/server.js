@@ -10,7 +10,7 @@ const url = require("url");
  * routes
  */
 const asd = require("./asset/delete");
-const asu = require("./asset/upload");
+const asa = require("./asset/save");
 const asl = require("./asset/load");
 const asL = require("./asset/list");
 const asm = require("./asset/meta");
@@ -35,7 +35,7 @@ const tsl = require("./tts/load");
 
 const functions = [
 	asd,
-	asu,
+	asa,
 	asl,
 	asL,
 	asm,

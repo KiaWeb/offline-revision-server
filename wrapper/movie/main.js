@@ -1,4 +1,3 @@
-const caché = require('../data/caché');
 const parse = require('../data/parse');
 const fUtil = require('../fileUtil');
 const nodezip = require('node-zip');
@@ -16,10 +15,6 @@ module.exports = {
 	 */
 	save(movieZip, thumb, id) {
 		return new Promise((res, rej) => {
-			if (!thumb && !id) {
-				console.log("Attempted autosave without presave.");
-				rej();
-			}
 			id ||= fUtil.generateId();
 
 			// save the thumbnail

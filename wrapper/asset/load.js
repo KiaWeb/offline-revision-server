@@ -36,16 +36,6 @@ module.exports = function (req, res, url) {
 					});
 					return true;
 				}
-				case "/goapi/getWaveform/": {
-					loadPost(req, res).then(data => {
-						const wfId = data.wfid + ".wf"
-
-						const b = asset.load(wfId)
-						b ? (res.statusCode = 200, res.end(b)) :
-							(res.statusCode = 404, res.end());
-					});
-					return true;
-				}
 				default: return;
 			}
 		}

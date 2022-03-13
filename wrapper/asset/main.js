@@ -3,7 +3,7 @@
  */
 const fs = require("fs");
 const database = require("../data/database"), DB = new database();
-const folder = `${__dirname}/../${process.env.CACHÉ_FOLDER}`;
+const folder = `${__dirname}/../${process.env.ASSET_FOLDER}`;
 const fUtil = require("../fileUtil");
 
 module.exports = {
@@ -70,11 +70,6 @@ module.exports = {
 		// save the file
 		fs.writeFileSync(`${folder}/${aId}.${ext}`, buf);
 		return aId;
-	},
-	saveWf(wf, aId) {
-		// save the waveform
-		fs.writeFileSync(`${folder}/${aId}.wf`, wf);
-		return true;
 	},
 	update(newInf, aId) {
 		// set new info and save

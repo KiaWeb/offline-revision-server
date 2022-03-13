@@ -1,4 +1,5 @@
 # General Wrapper Offline Stuff
+wrapper/_ASSETS/*
 wrapper/_CACHÉ/*
 wrapper/_SAVED/*
 wrapper/_THEMES/import.xml

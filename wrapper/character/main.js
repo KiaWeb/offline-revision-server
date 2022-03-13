@@ -7,7 +7,7 @@ const get = require('../request/get');
 const fs = require('fs');
 const themes = {};
 const database = require("../data/database"), DB = new database();
-const folder = `${__dirname}/../${process.env.CACHÉ_FOLDER}`;
+const folder = `${__dirname}/../${process.env.ASSET_FOLDER}`;
 
 function addTheme(id, buffer) {
 	const beg = buffer.indexOf(`theme_id="`) + 10;

@@ -24,4 +24,12 @@ module.exports = {
 		fs.writeFileSync(`${folder}/${aId}.${ext}`, buf);
 		return aId;
 	},
+	assign(aId, mId) {
+		// set new info and save
+		const db = DB.get();
+		const met = db.assets.find(i => i.id == aId);
+		met.movies.push(mId);
+		DB.save(db);
+		return true;
+	}
 };

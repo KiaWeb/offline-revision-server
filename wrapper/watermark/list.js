@@ -1,6 +1,5 @@
-const loadPost = require('../request/post_body');
 const header = process.env.XML_HEADER;
-const asset = require('./main');
+const asset = require("./main");
 
 function listWm() {
 	files = asset.list("sound");

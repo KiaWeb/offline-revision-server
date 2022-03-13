@@ -33,6 +33,7 @@ const thl = require("./theme/load");
 const thL = require("./theme/list");
 const tsv = require("./tts/voices");
 const tsl = require("./tts/load");
+const waa = require("./watermark/assign");
 const wal = require("./watermark/list");
 
 const functions = [
@@ -60,6 +61,7 @@ const functions = [
 	thL,
 	tsv,
 	tsl,
+	waa,
 	wal,
 ];
 

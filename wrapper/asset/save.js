@@ -3,6 +3,7 @@
  */
 const formidable = require("formidable");
 const fs = require("fs");
+const mp3Duration = require("mp3-duration");
 const asset = require("./main");
 
 module.exports = function (req, res, url) {
@@ -13,13 +14,32 @@ module.exports = function (req, res, url) {
 				const path = files.import.path, buffer = fs.readFileSync(path);
 		
 				const name = files.import.name;
-				const meta = {
-					type: f.type,
-					subtype: f.subtype,
-					title: name.substring(0, name.lastIndexOf(".")),
-					duration: null,
-					ext: name.substring(name.lastIndexOf(".") + 1),
-					tId: "ugc"
+				const ext = name.substring(name.lastIndexOf(".") + 1);
+				let meta;
+				switch (ext) {
+					case "mp3": {
+						mp3Duration(buffer, (e, duration) => {
+							if (e || !duration) return;
+							meta = {
+								type: f.type,
+								subtype: f.subtype,
+								title: name.substring(0, name.lastIndexOf(".")),
+								duration: 1e3 * duration,
+								ext: ext,
+								tId: "ugc"
+							}
+						});
+					}
+					default: {
+						meta = {
+							type: f.type,
+							subtype: f.subtype,
+							title: name.substring(0, name.lastIndexOf(".")),
+							duration: null,
+							ext: ext,
+							tId: "ugc"
+						}
+					}
 				}
 				asset.save(buffer, meta);
 				fs.unlinkSync(path);

@@ -75,6 +75,18 @@ async function listAssets(data) {
 			}
 			break;
 		}
+		case "sound": {
+			files = asset.list("sound");
+			response = {
+				"status": "ok",
+				"data": {
+					"xml": `${header}<ugc more="0">${files
+						.map(v => `<sound subtype="${v.subtype}" id="${v.file}" enc_asset_id="${v.id}" name="${v.title}" enable="Y" duration="${v.duration}" downloadtype="progressive"/>`)
+						.join("")}</ugc>`
+				}
+			};
+			break;
+		}
 		default: { // no type? send a blank response
 			response = {
 				"status": "ok",

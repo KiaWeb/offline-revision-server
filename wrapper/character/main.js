@@ -91,7 +91,7 @@ module.exports = {
 		});
 		DB.save(db);
 		// save the file
-		fs.writeFileSync(`${__dirname}/../${process.env.CACHÉ_FOLDER}/${id}.${ext}`, buf);
+		fs.writeFileSync(`${folder}/${id}.${ext}`, buf);
 		return id;
 	},
 	/** 
@@ -101,7 +101,7 @@ module.exports = {
 	 */
 	saveThumb(buf, id) {
 		// save the file
-		fs.writeFileSync(`${__dirname}/../${process.env.CACHÉ_FOLDER}/${id}.png`, buf);
+		fs.writeFileSync(`${folder}/${id}.png`, buf);
 		return id;
 	},
 }

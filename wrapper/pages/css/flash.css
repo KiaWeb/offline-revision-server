@@ -14,9 +14,9 @@ previewer
 	/* style */
 	background: #fff;
 	box-shadow: 0 6px 20px 6px #00000040;
-    border-radius: 8px;
+	border-radius: 8px;
 	/* layout */
-    position: absolute;
+	position: absolute;
 	padding: 20px 40px;
 	top: 50%;
 	left: 50%;
@@ -32,16 +32,21 @@ previewer
 importer
 **/
 #import_head {
-	padding: 5px;
-	background: #282b3f;
+	/* style */
+	background: linear-gradient(#333, #111);
+	box-shadow: 0 -2px 10px 0 #000;
+	color: #fff;
+	/* layout */
+	text-align: center;
+	padding: 8px;
 	height: 104px;
-	color: #a9c4c6;
 }
 #import_head>:nth-child(1) {
-    display: flex;
-    justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 }
 #import_head>:nth-child(1)>h3 { margin: 0 }
+#importer form { margin: 8px }
 #importer {
 	/* style */
 	background: #fff;

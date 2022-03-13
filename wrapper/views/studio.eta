@@ -22,9 +22,9 @@
 					<h3 id="import-media">Import Media</h3>
 					<h3 id="close-button" onclick="hideImporter()">✖</h3>
 				</div>
-				<br />
 				<form>
-					<input id="importer-files" type="file" name="file" title="Upload Files" />
+					<label id="import-toggle" for="importer-files" class="button_big">UPLOAD FILES</label>
+					<input id="importer-files" type="file" name="file" title="Upload Files" style="display:none" />
 				</form>
 			</nav>
 			<div id="importer-queue"></div>

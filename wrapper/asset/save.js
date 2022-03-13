@@ -27,8 +27,10 @@ module.exports = function (req, res, url) {
 								duration: 1e3 * duration,
 								ext: ext,
 								tId: "ugc"
-							}
+							};
+							asset.save(buffer, meta);
 						});
+						break;
 					}
 					default: {
 						meta = {
@@ -39,9 +41,10 @@ module.exports = function (req, res, url) {
 							ext: ext,
 							tId: "ugc"
 						}
+						asset.save(buffer, meta);
+						break;
 					}
 				}
-				asset.save(buffer, meta);
 				fs.unlinkSync(path);
 				res.end(JSON.stringify({ status: "ok" }));
 			});

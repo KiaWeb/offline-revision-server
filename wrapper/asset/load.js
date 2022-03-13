@@ -18,21 +18,36 @@ module.exports = function (req, res, url) {
 		}
 
 		case "POST": {
-			if (url.path != "/goapi/getAsset/" && url.path != "/goapi/getAssetEx/") return;
-			loadPost(req, res).then(data => {
-				const aId = data.assetId || data.enc_asset_id;
+			switch (url.path) {
+				case "/goapi/getAssetEx/":
+				case "/goapi/getAsset/": {
+					loadPost(req, res).then(data => {
+						const aId = data.assetId || data.enc_asset_id;
+		
+						const b = asset.load(aId);
+						if (b) {
+							res.setHeader("Content-Length", b.length);
+							res.setHeader("Content-Type", "audio/mp3");
+							res.end(b);
+						} else {
+							res.statusCode = 404;
+							res.end();
+						};
+					});
+					return true;
+				}
+				case "/goapi/getWaveform/": {
+					loadPost(req, res).then(data => {
+						const wfId = data.wfid + ".wf"
 
-				const b = asset.load(aId);
-				if (b) {
-					res.setHeader("Content-Length", b.length);
-					res.setHeader("Content-Type", "audio/mp3");
-					res.end(b);
-				} else {
-					res.statusCode = 404;
-					res.end();
-				};
-			});
-			return true;
+						const b = asset.load(wfId)
+						b ? (res.statusCode = 200, res.end(b)) :
+							(res.statusCode = 404, res.end());
+					});
+					return true;
+				}
+				default: return;
+			}
 		}
 		default: return;
 	}

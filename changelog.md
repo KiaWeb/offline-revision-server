@@ -9,6 +9,7 @@ This changelog is based off [Keep a Changelog](https://keepachangelog.com) and ~
   - File importing (finally!)
   - Starters
   - Video previewer
+  - Waveform saving/loading
   - JSON support for POST body parser
   - Local database for asset info
   - Better logging to the console/error catching

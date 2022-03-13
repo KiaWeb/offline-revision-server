@@ -3,7 +3,6 @@
  */
 const fs = require("fs");
 const database = require("../data/database"), DB = new database();
-const nodezip = require("node-zip");
 const folder = `${__dirname}/../${process.env.CACHÉ_FOLDER}`;
 const fUtil = require("../fileUtil");
 
@@ -50,7 +49,7 @@ module.exports = {
 	},
 	save(buf, { type, subtype, title, duration, ext, tId }) {
 		// save asset info
-		const id = fUtil.generateId();
+		const aId = fUtil.generateId();
 		const db = DB.get();
 		db.assets.push({ // base info, can be modified by the user later
 			id: id,
@@ -69,8 +68,13 @@ module.exports = {
 		});
 		DB.save(db);
 		// save the file
-		fs.writeFileSync(`${__dirname}/../${process.env.CACHÉ_FOLDER}/${id}.${ext}`, buf);
+		fs.writeFileSync(`${folder}/${aId}.${ext}`, buf);
 		return id;
+	},
+	saveWf(wf, aId) {
+		// save the waveform
+		fs.writeFileSync(`${folder}/${aId}.wf`, wf);
+		return true;
 	},
 	update(newInf, aId) {
 		// set new info and save

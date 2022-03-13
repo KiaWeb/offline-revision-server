@@ -52,7 +52,7 @@ module.exports = {
 		const aId = fUtil.generateId();
 		const db = DB.get();
 		db.assets.push({ // base info, can be modified by the user later
-			id: id,
+			id: aId,
 			enc_asset_id: id,
 			themeId: tId,
 			type: type,

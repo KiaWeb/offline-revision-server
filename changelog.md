@@ -15,6 +15,7 @@ This changelog is based off [Keep a Changelog](https://keepachangelog.com) and ~
   - Local database for asset info
   - Better logging to the console/error catching
 ### Changed
+  - Char thumbs now load the files instead of being generated
   - Improved CSS
   - Movie/char/asset ids are just random strings
   - Flash page generation uses Eta.js

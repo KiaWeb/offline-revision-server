@@ -64,7 +64,7 @@ module.exports = {
 			},
 			tags: "",
 			duration: duration,
-			file: `${id}.${ext}`
+			file: `${aId}.${ext}`
 		});
 		DB.save(db);
 		// save the file

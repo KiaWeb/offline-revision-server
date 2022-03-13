@@ -2,9 +2,9 @@
 # Wrapper: Offline Changelog
 This changelog is based off [Keep a Changelog](https://keepachangelog.com) and ~~somewhat but not really~~ adheres to [Semantic Versioning](https://semver.org/). If you have no idea what that means, basically this changelog is formatted in a specific consistent way, and version numbers are formatted as X.Y.Z, X being a major not-backwards-compatible update, Y being a feature update, and X being bug fixes.
 
-## Version 1.3.0 - 2022-00-00 - is it worth the wait?
+## Version 1.3.0 - 2022-03-00 - is it worth the wait?
 ### Added
-  - Auto-update feature with Git
+  - Auto-update feature with Git (thanks sparrkz!)
   - Better method of passing config.bat settings to node
   - File importing (finally!)
   - Starters
@@ -18,7 +18,7 @@ This changelog is based off [Keep a Changelog](https://keepachangelog.com) and ~
   - Movie/char/asset ids are just random strings
   - Flash page generation uses Eta.js
   - Remade character uploading
-  - Removed build numbering
+  - Removed build numbering (fuck you xom!)
   - Removed the .sh files in the wrapper folder
   - Removed Google Wavenet voices
   - Removed IBM Watson voices

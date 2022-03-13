@@ -23,7 +23,7 @@ async function listAssets(data) {
 			}
 			files = asset.list("char", 0, themeId);
 			response = `${header}<ugc more="0">${files
-				.map(v => `<char id="${v.id}" enc_asset_id="${v.id}" name="Untitled" cc_theme_id="${v.themeId}" thumbnail_url="char_default.png" copyable="Y"><tags>${v.tags}</tags></char>`)
+				.map(v => `<char id="${v.id}" enc_asset_id="${v.id}" name="${v.title}" cc_theme_id="${v.themeId}" thumbnail_url="char_default.png" copyable="Y"><tags>${v.tags}</tags></char>`)
 				.join("")}</ugc>`;
 			break;
 		}

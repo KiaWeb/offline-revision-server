@@ -53,7 +53,7 @@ module.exports = {
 		const db = DB.get();
 		db.assets.push({ // base info, can be modified by the user later
 			id: aId,
-			enc_asset_id: id,
+			enc_asset_id: aId,
 			themeId: tId,
 			type: type,
 			subtype: subtype,

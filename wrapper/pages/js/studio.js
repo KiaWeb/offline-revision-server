@@ -135,6 +135,7 @@ class AssetImporter {
 						<div class="import_as">
 							<a href="#" type="bg">Background</a>
 							<a href="#" type="prop">Prop</a>
+							<a href="#" type="watermark">Watermark</a>
 						</div>
 					</div>
 				`).appendTo(this.queue);
@@ -179,12 +180,11 @@ class ImporterFile {
 			case "soundeffect":
 			case "voiceover": {
 				return { type: "sound", subtype: type }
-				break;
 			}
 			case "bg":
-			case "prop": {
+			case "prop":
+			case "watermark": {
 				return { type: type, subtype: 0 }
-				break;
 			}
 		}
 	}

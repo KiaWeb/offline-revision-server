@@ -69,7 +69,7 @@ module.exports = {
 		DB.save(db);
 		// save the file
 		fs.writeFileSync(`${folder}/${aId}.${ext}`, buf);
-		return id;
+		return aId;
 	},
 	saveWf(wf, aId) {
 		// save the waveform

@@ -69,12 +69,6 @@
 		}
 	},
 	"POST": {
-		"/goapi/getUserWatermarks/": {
-			"headers": {
-				"Content-Type": "text/html; charset=UTF-8"
-			},
-			"content": "<?xml encoding=\"UTF-8\"?><watermarks><current/><preview/></watermarks>"
-		},
 		"/goapi/getMovieInfo/": {
 			"headers": {
 				"Content-Type": "text/html; charset=UTF-8"

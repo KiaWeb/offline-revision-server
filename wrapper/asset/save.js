@@ -6,6 +6,7 @@ const fs = require("fs");
 const mp3Duration = require("mp3-duration");
 const asset = require("./main");
 const loadPost = require("../request/post_body");
+const wm = require("../watermark/main");
 
 module.exports = function (req, res, url) {
 	if (req.method != "POST") return;
@@ -17,8 +18,8 @@ module.exports = function (req, res, url) {
 				const name = files.import.name;
 				const ext = name.substring(name.lastIndexOf(".") + 1);
 				let meta;
-				switch (ext) {
-					case "mp3": {
+				switch (f.type) {
+					case "sound": {
 						mp3Duration(buffer, (e, duration) => {
 							if (e || !duration) return;
 							meta = {
@@ -33,6 +34,7 @@ module.exports = function (req, res, url) {
 						});
 						break;
 					}
+					case "watermark": { wm.save(buffer, ext); break }
 					default: {
 						meta = {
 							type: f.type,

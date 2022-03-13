@@ -158,6 +158,10 @@ function meta2Xml(m) {
 			}
 			break;
 		}
+		case "sound": {
+			response = `<sound subtype="${v.subtype}" id="${v.file}" enc_asset_id="${v.id}" name="${v.title}" enable="Y" duration="${v.duration}" downloadtype="progressive"/>`;
+			break;
+		}
 	};
 	return response;
 }
@@ -201,22 +205,6 @@ module.exports = {
 		for (const eK in elements) {
 			var element = elements[eK];
 			switch (element.name) {
-
-				case 'asset': {
-					if (mId) {
-						const aId = element.attr.id;
-						const m = useBase64(aId) ? 'base64' : 'utf8', b = Buffer.from(element.val, m);
-						const d = await new Promise(res => mp3Duration(b, (e, d) => e || res(Math.floor(1e3 * d))));
-						const t = assetTypes[aId];
-						//const n = `ugc.${t}.${aId}`;
-						//fUtil.addToZip(zip, n, b);
-						ugcString += `<sound subtype="${t.subtype}" id="${aId}" enc_asset_id="${aId
-							}" name="${t.name}" downloadtype="progressive" duration="${d}"/>`;
-						caché.save(mId, aId, b);
-					}
-					break;
-				}
-
 				case 'cc_char': {
 					const beg = element.startTagPosition - 1;
 					const end = xmlBuffer.indexOf('</cc_char>', beg) + 10;
@@ -228,39 +216,35 @@ module.exports = {
 					themes[theme] = true;
 
 					fUtil.addToZip(zip, element.attr.file_name, sub);
-					ugcString += `<char id="${id}"cc_theme_id="${theme}"><tags/></char>`;
+					ugcString += `<char id="${id}" cc_theme_id="${theme}"><tags/></char>`;
 					break;
 				}
 
 				case 'sound': {
-					const sfile = element.childNamed('sfile').val;
-					const file = sfile.substr(sfile.indexOf('.') + 1);
+					const val = element.childNamed('sfile').val;
 
-					var ttsData = element.childNamed('ttsdata');
-					if (sfile.endsWith('.swf')) {
-						const pieces = sfile.split('.');
+					var pieces = val.split(".");
+					if (val.endsWith('.swf')) {
+						const pieces = val.split('.');
 						const theme = pieces[0], name = pieces[1];
 						const url = `${store}/${theme}/sound/${name}.swf`;
 						const fileName = `${theme}.sound.${name}.swf`;
 						const buffer = await get(url);
 						fUtil.addToZip(zip, fileName, buffer);
 					}
-					else if (sfile.startsWith('ugc.')) {
-						var subtype, name;
-						if (ttsData) {
-							const text = ttsData.childNamed('text').val;
-							const voice = ttsInfo.voices[ttsData.childNamed('voice').val].desc;
-							name = `[${voice}] ${text.replace(/"/g, '\\"')}`;
-							subtype = 'tts';
-						} else {
-							subtype = 'sound';
-							name = file;
-						}
+					else if (val.startsWith('ugc.')) {
+						var ext = pieces.pop();
+						pieces.splice(1, 0, element.name)
 
-						assetTypes[file] = {
-							subtype: subtype,
-							name: name,
-						};
+						var fileName = pieces.join(".") + `.${ext}`;
+						console.log(pieces);
+						if (!zip[fileName]) {
+							var buff = asset.load(pieces[2]);
+							var meta = asset.meta(false, pieces[2]);
+							fUtil.addToZip(zip, fileName, buff);
+							ugcString += meta2Xml(meta);
+							themes[pieces[0]] = true;
+						}
 					}
 					break;
 				}

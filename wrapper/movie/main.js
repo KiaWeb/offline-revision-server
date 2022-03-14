@@ -76,7 +76,6 @@ module.exports = {
 			const thumb = fs.existsSync(`${folder}/${mId}.png`);
 			if (movie && thumb) array.push(mId);
 		});
-		console.log(array)
 		return array;
 	},
 	async meta(mId) {

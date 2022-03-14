@@ -28,7 +28,7 @@ module.exports = {
 		// set new info and save
 		const db = DB.get();
 		const met = db.assets.find(i => i.id == aId);
-		met.movies.push(mId);
+		met.movies.unshift(mId);
 		DB.save(db);
 		return true;
 	}

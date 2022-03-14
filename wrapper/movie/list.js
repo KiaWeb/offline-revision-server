@@ -8,7 +8,7 @@ module.exports = function (req, res, url) {
 	try {
 		Promise
 			.all(movie.list().map(movie.meta))
-			.then(a => res.end(JSON.stringify(a)));
+			.then(a => res.end(JSON.stringify(a.sort((a, b) => new Date(b.date) - new Date(a.date)))));
 	} catch (err) {
 		if (process.env.NODE_ENV == "dev") throw err;
 		console.error("Error listing movies: " + err)

@@ -75,7 +75,7 @@ module.exports = {
 		// save asset info
 		const id = fUtil.generateId();
 		const db = DB.get();
-		db.assets.push({ // base info, can be modified by the user later
+		db.assets.unshift({ // base info, can be modified by the user later
 			id: id,
 			enc_asset_id: id,
 			themeId: tId,

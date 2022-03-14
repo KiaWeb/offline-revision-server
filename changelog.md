@@ -24,6 +24,7 @@ This changelog is based off [Keep a Changelog](https://keepachangelog.com) and ~
   - Removed the .sh files in the wrapper folder
   - Removed Google Wavenet voices
   - Removed IBM Watson voices
+  - Removed Victoria from MCW
   - Node.js installer is now 17.6.0
 ### Fixed
   - Polly voices

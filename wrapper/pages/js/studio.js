@@ -98,6 +98,7 @@ class AssetImporter {
 		if (maxsize && file.size > maxsize) return; // check if file is too large
 		var validFileType = false;
 		let el;
+		console.log(ext);
 		switch (ext) {
 			case "mp3":
 			case "wav": {
@@ -136,6 +137,24 @@ class AssetImporter {
 							<a href="#" type="bg">Background</a>
 							<a href="#" type="prop">Prop</a>
 							<a href="#" type="watermark">Watermark</a>
+						</div>
+					</div>
+				`).appendTo(this.queue);
+				break;
+			}
+			case "mp4": {
+				validFileType = true;
+				el = $(`
+					<div class="importer_asset">
+						<div class="asset_metadata">
+							<img class="asset_preview" src="/pages/img/importer/image.png" />
+							<div>
+								<h4>${file.name}</h4>
+								<p class="asset_subtype">${filesize(file.size)} | Import as...</p>
+							</div>
+						</div>
+						<div class="import_as">
+							<a href="#" type="video">Import</a>
 						</div>
 					</div>
 				`).appendTo(this.queue);
@@ -185,6 +204,9 @@ class ImporterFile {
 			case "prop":
 			case "watermark": {
 				return { type: type, subtype: 0 }
+			}
+			case "video": { // lie
+				return { type: "video", subtype: type }
 			}
 		}
 	}

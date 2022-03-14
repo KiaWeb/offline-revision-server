@@ -4,6 +4,7 @@
 const formidable = require("formidable");
 const fs = require("fs");
 const mp3Duration = require("mp3-duration");
+const { exec } = require("child_process");
 const asset = require("./main");
 const wm = require("../watermark/main");
 
@@ -32,6 +33,21 @@ module.exports = function (req, res, url) {
 							asset.save(buffer, meta);
 						});
 						break;
+					}
+					case "video": {
+						exec("dir", (err, stdout, stderr) => {
+							if (err) {
+								console.error(err);
+								return;
+							}
+						
+							if (stderr) {
+								console.error(stderr);
+								return;
+							}
+							
+							console.log(stdout);
+						});
 					}
 					case "watermark": { wm.save(buffer, ext); break }
 					default: {

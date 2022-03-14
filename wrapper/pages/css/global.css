@@ -12,10 +12,15 @@ html, body {
 	width: 100%;
 	height: 100%;
 }
+html.dark, html.dark>body {
+	background: #0c0c0c;
+	color: #eee;
+}
 body {
 	display: flex; 
 	flex-direction: column; 
 }
+main { padding: 20px 40px }
 
 
 /**
@@ -87,6 +92,7 @@ warning
 	padding: 10px 100px;
 	width: 100%;
 }
+html.dark .warning { background: linear-gradient(#abab73, #545443) }
 
 
 /**

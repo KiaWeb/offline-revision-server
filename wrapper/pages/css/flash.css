@@ -5,7 +5,7 @@ this css has flash page styling
 /**
 general stuff
 **/
-main { display: flex }
+main { display: flex; padding: 0 }
 
 /**
 previewer

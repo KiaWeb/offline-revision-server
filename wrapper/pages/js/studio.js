@@ -5,18 +5,13 @@ const studio = $("#obj");
 /**
  * studio functions
  */
- interactiveTutorial = { // hide interactive tutorial
+interactiveTutorial = { // hide interactive tutorial
 	neverDisplay: function() {
 		return true;
 	}
 };
 function studioLoaded(arg) { console.log(arg) }
 function exitStudio() { window.location = "/" }
-// prevent unwanted closing
-window.onbeforeunload = function() {
-	const response = confirm("Are you sure you want to exit the studio? Make sure your work is saved.")
-	return (response) ? true : false
-};
 
 /**
  * show and hide widgets

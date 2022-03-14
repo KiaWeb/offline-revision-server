@@ -20,6 +20,13 @@
 			},
 			"content": "111"
 		},
+		"/account/logo": {
+			"headers": {
+				"Location": "/pages/html/settings.html"
+			},
+			"statusCode": 302,
+			"content": ""
+		},
 		"/crossdomain.xml": {
 			"headers": {
 				"Content-Type": "text/html; charset=UTF-8"

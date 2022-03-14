@@ -11,6 +11,8 @@ This changelog is based off [Keep a Changelog](https://keepachangelog.com) and ~
   - Video previewer
   - Watermarks
   - Waveform saving/loading
+  - Real API settings
+    - Dark mode
   - JSON support for POST body parser
   - Local database for asset info
   - Better logging to the console/error catching

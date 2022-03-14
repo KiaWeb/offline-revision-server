@@ -1,8 +1,8 @@
 <!-- markdownlint-disable MD004 MD024 -->
-# Wrapper: Offline Changelog
+# Wrapper: Offline (Revision) Changelog
 This changelog is based off [Keep a Changelog](https://keepachangelog.com) and ~~somewhat but not really~~ adheres to [Semantic Versioning](https://semver.org/). If you have no idea what that means, basically this changelog is formatted in a specific consistent way, and version numbers are formatted as X.Y.Z, X being a major not-backwards-compatible update, Y being a feature update, and X being bug fixes.
 
-## Version 1.3.0 - 2022-03-00 - is it worth the wait?
+## Version 1.3.0 - 2022-03-00 - the real file importing update
 ### Added
   - Auto-update feature with Git (thanks sparrkz!)
   - Better method of passing config.bat settings to node
@@ -35,6 +35,8 @@ This changelog is based off [Keep a Changelog](https://keepachangelog.com) and ~
   - Acapela voices (thanks VisualPlugin!)
   - Character scaling from the CC
   - Node crash windows now let you type into them
+
+# Wrapper: Offline Changelog
 
 ## Version 1.2.3 - 2021-03-06 - i am HUNGRY FOR UPDATES!!!
 ### Added

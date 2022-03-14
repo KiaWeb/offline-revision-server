@@ -671,29 +671,25 @@ title Wrapper: Offline v!WRAPPER_VER! [Loading...]
 :: Close existing node apps
 :: Hopefully fixes EADDRINUSE errors??
 if !VERBOSEWRAPPER!==y (
-	echo Closing any existing node and/or PHP apps...
+	echo Closing any existing node apps...
 	if !DRYRUN!==n ( TASKKILL /IM node.exe /F )
-	if !DRYRUN!==n ( TASKKILL /IM php.exe /F )
 	echo:
 ) else (
 	if !DRYRUN!==n ( TASKKILL /IM node.exe /F 2>nul )
-	if !DRYRUN!==n ( TASKKILL /IM php.exe /F 2>nul )
 )
 
-:: Start Node.js, http-server and PHP
-echo Loading Node.js, http-server and PHP...
+:: Start Node.js and http-server
+echo Loading Node.js and http-server...
 pushd utilities
 if !VERBOSEWRAPPER!==y (
 	if !DRYRUN!==n (
 		start /MIN open_http-server.bat
 		start /MIN open_nodejs.bat
-		start /MIN open_vfproxy_php.bat
 	)
 ) else (
 	if !DRYRUN!==n (
 		start SilentCMD open_http-server.bat
 		start SilentCMD open_nodejs.bat
-		start SilentCMD open_vfproxy_php.bat
 	)
 )
 popd
@@ -970,14 +966,12 @@ echo You must answer Yes or No. && goto exitwrapperretry
 
 title Wrapper: Offline v!WRAPPER_VER! [Shutting down...]
 
-:: Shut down Node.js, PHP and http-server
+:: Shut down Node.js and http-server
 if !VERBOSEWRAPPER!==y (
 	if !DRYRUN!==n ( TASKKILL /IM node.exe /F )
-	if !DRYRUN!==n ( TASKKILL /IM php.exe /F )
 	echo:
 ) else (
 	if !DRYRUN!==n ( TASKKILL /IM node.exe /F 2>nul )
-	if !DRYRUN!==n ( TASKKILL /IM php.exe /F 2>nul )
 )
 
 :: This is where I get off.
@@ -1000,9 +994,6 @@ echo BEWEWEWEWWW PSSHHHH KSHHHHHHHHHHHHHH
 PING -n 3 127.0.0.1>nul
 TASKKILL /IM node.exe /F
 echo NODE DOT JS ANNIHILATED
-PING -n 3 127.0.0.1>nul
-TASKKILL /IM php.exe /F
-echo PHP DESTROYED
 PING -n 3 127.0.0.1>nul
 echo TIME TO ELIMINATE WRAPPER OFFLINE
 PING -n 3 127.0.0.1>nul

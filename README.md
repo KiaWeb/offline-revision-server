@@ -50,7 +50,7 @@ Wrapper: Offline credits:
 | NathanSaturnBOI  | Logo                                                   |
 | Blukas/GoTube (D)| Import idea, Mega Comedy World 2                       |
 | VisualPlugin     | Text to speech voices                                  |
-| xomdjl_          | VFProxy, Text to speech voices                         |
+| xomdjl_          | Text to speech voices                                  |
 | creepyjokes2000  | Waveform fix, improved actions                         |
 | JoshAnimate      | Headgear fix                                           |
 | RegularSpark (D) | Fixing 1.2.3 to actually work, truncated themelist     |

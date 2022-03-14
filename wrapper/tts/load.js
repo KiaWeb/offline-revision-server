@@ -4,10 +4,13 @@ const voices = require('./info').voices;
 const asset = require('../asset/main');
 const get = require('../request/get');
 const brotli = require('brotli');
+const fs = require("fs")
 const md5 = require("js-md5");
 const base64 = require("js-base64");
 const https = require('https');
 const http = require('http');
+const { exec } = require("child_process");
+const colder = `${__dirname}/../${process.env.CACHÉ_FOLDER}`;
 
 function processVoice(voiceName, text) {
 	return new Promise((res, rej) => {
@@ -17,7 +20,7 @@ function processVoice(voiceName, text) {
 				/**
 				 * Does a POST request to https://pollyvoices.com/.
 				 * The response is a redirect to /play/(id).mp3.
-				 * Then it gets the redirect link and removes the "/play" part and requests that URL, which returns the file.
+				 * Then it gets the redirect link, removes the "/play" part and requests that URL, which returns the file.
 				 * 
 				 * Example: (path - method - data - headers (optional))
 				 * / - POST - text=(text)&voice=(voice)
@@ -302,19 +305,33 @@ function processVoice(voiceName, text) {
 			}
 			case "voiceforge": {
 				var q = new URLSearchParams({
-					voice: voice.arg,
+					"HTTP-X-API-KEY": "9a272b4",
 					msg: text,
+					voice: voice.arg,
+					email: null
 				}).toString();
-				http.get(
+				https.get(
 					{
-						host: "127.0.0.1",
-						port: "8181",
-						path: `/vfproxy/speech.php?${q}`,
+						host: "api.voiceforge.com",
+						port: "443",
+						path: `/swift_engine?${q}`,
 					},
 					(r) => {
 						var buffers = [];
 						r.on("data", (d) => buffers.push(d));
-						r.on("end", () => res(Buffer.concat(buffers)));
+						r.on("end", () => {
+							// save temp file and convert it to an mp3
+							fs.writeFileSync(`${colder}/tempTTS.wav`, Buffer.concat(buffers));
+							exec(`start data/lame/lame.exe -q0 -b128 --resample 16 "_CACHÉ/tempTTS.wav" "_CACHÉ/tempTTS.mp3"`, (err, stdout, stderr) => {
+								if (err) rej(err);
+								if (stderr) rej(stderr);
+								const buf = fs.readFileSync(`${colder}/tempTTS.mp3`);
+								// delete temp files
+								fs.unlinkSync(`${colder}/tempTTS.wav`);
+								fs.unlinkSync(`${colder}/tempTTS.mp3`);
+								res(buf);
+							})
+						});
 						r.on("error", rej);
 					}
 				);

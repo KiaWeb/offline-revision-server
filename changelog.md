@@ -20,6 +20,7 @@ This changelog is based off [Keep a Changelog](https://keepachangelog.com) and ~
   - Movie/char/asset ids are just random strings
   - Flash page generation uses Eta.js
   - Remade character uploading
+  - Replaced VFProxy with a real fix
   - Removed build numbering (fuck you xom!)
   - Removed the useless .sh files in the wrapper folder
   - Removed Google Wavenet voices

@@ -33,10 +33,8 @@ const thl = require("./theme/load");
 const thL = require("./theme/list");
 const tsv = require("./tts/voices");
 const tsl = require("./tts/load");
-const waa = require("./watermark/assign");
-const wal = require("./watermark/list");
-const wAl = require("./waveform/load");
-const wAs = require("./waveform/save");
+const wal = require("./waveform/load");
+const was = require("./waveform/save");
 
 const functions = [
 	asd,
@@ -63,10 +61,8 @@ const functions = [
 	thL,
 	tsv,
 	tsl,
-	waa,
 	wal,
-	wAl,
-	wAs
+	was
 ];
 
 /**

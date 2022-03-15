@@ -9,14 +9,14 @@ module.exports = class {
 		// create the file if it doesn't exist
 		if (!fs.existsSync(this.path)) {
 			console.error("Database doesn't exist! Creating...")
-			this.save({ assets: [], wm: [] })
+			this.save({ assets: [], faw: [] })
 		}
 		try {
 			this.refresh();
 		} catch (err) {
 			console.error("Error loading DB: " + err)
 			// return a fake db
-			return { assets: [], wm: [] };
+			return { assets: [], faw: [] };
 		}
 	}
 	refresh() { // refresh the database vars

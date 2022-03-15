@@ -2,14 +2,13 @@
 # Wrapper: Offline (Revision) Changelog
 This changelog is based off [Keep a Changelog](https://keepachangelog.com) and ~~somewhat but not really~~ adheres to [Semantic Versioning](https://semver.org/). If you have no idea what that means, basically this changelog is formatted in a specific consistent way, and version numbers are formatted as X.Y.Z, X being a major not-backwards-compatible update, Y being a feature update, and X being bug fixes.
 
-## Version 1.3.0 - 2022-03-00 - the real file importing update
+## Version 1.3.0 - 2022-03-1or2? - the features everyone wants
 ### Added
   - Auto-update feature with Git (thanks sparrkz!)
   - Better method of passing config.bat settings to node
   - File importing (finally!)
   - Starters
   - Video previewer
-  - Watermarks
   - Waveform saving/loading
   - Real API settings
     - Dark mode

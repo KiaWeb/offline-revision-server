@@ -9,32 +9,17 @@ const themes = {};
 const database = require("../data/database"), DB = new database();
 const folder = `${__dirname}/../${process.env.ASSET_FOLDER}`;
 
-function addTheme(id, buffer) {
-	const beg = buffer.indexOf(`theme_id="`) + 10;
-	const end = buffer.indexOf(`"`, beg);
-	const theme = buffer.subarray(beg, end).toString();
-	return themes[id] = theme;
-}
-
-function save(id, data) {
-	fs.writeFileSync(fUtil.getFileIndex('char-', '.xml', id), data);
-	addTheme(id, data);
-	return id;
-}
-
-fUtil.getValidFileIndicies('char-', '.xml').map(n => {
-	return addTheme(`c-${n}`, fs.readFileSync(fUtil.getFileIndex('char-', '.xml', n)));
-});
-
 module.exports = {
 	/**
 	 * @param {string} id
 	 * @returns {Promise<string>}
 	 */
-	getTheme(id) {
+	getTheme(buffer) {
 		return new Promise((res, rej) => {
-			if (themes[id]) res(themes[id]);
-			this.load(id).then(b => res(addTheme(id, b))).catch(rej);
+			const beg = buffer.indexOf(`theme_id="`) + 10;
+			const end = buffer.indexOf(`"`, beg);
+			const theme = buffer.subarray(beg, end).toString();
+			return theme;
 		});
 	},
 	list(tId) { // very simple thanks to the database

@@ -31,7 +31,7 @@ module.exports = function (req, res, url) {
 			return true;
 			break;
 		}
-		case "/goapi/saveCCThumbs/": { // save stock thumbnail
+		case "/goapi/saveCCThumbs/": { // fake saving stock thumbnails
 			res.end(00)
 			return true;
 			break;

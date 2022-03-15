@@ -5,7 +5,6 @@ const formidable = require("formidable");
 const fs = require("fs");
 const mp3Duration = require("mp3-duration");
 const asset = require("./main");
-const wm = require("../watermark/main");
 
 module.exports = function (req, res, url) {
 	if (req.method != "POST") return;
@@ -33,7 +32,6 @@ module.exports = function (req, res, url) {
 						});
 						break;
 					}
-					case "watermark": { wm.save(buffer, ext); break }
 					default: {
 						meta = {
 							type: f.type,

@@ -307,10 +307,10 @@ module.exports = {
 
 										try {
 											buffer = await char.load(id);
-											const charTheme = await char.getTheme(id);
+											const meta = asset.meta(false, id);
 											fileName = `${theme}.char.${id}.xml`;
 											if (theme == 'ugc')
-												ugcString += `<char id="${id}"cc_theme_id="${charTheme}"><tags/></char>`;
+												ugcString += meta2Xml(meta);
 										} catch (e) {
 											console.log(e);
 										}

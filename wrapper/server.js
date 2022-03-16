@@ -4,8 +4,6 @@
 // assign config and env.json stuff to process.env
 const env = Object.assign(process.env, require("./env"), require("./config"));
 const http = require("http");
-const static = require("node-static");
-const fileServer = new static.Server("./pages");
 const url = require("url");
 
 /**
@@ -79,12 +77,8 @@ module.exports = http
 			// log every request
 			console.log(req.method, parsedUrl.path);
 			if (!found) { // page not found
-				fileServer.serve(req, res, (err, result) => { 
-					if (err) {
-						res.statusCode = 404;
-						res.end();
-					};
-				});
+				res.statusCode = 404;
+				res.end();
 			}
 		} catch (x) {
 			res.statusCode = 404;

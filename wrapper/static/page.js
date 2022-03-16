@@ -1,3 +1,6 @@
+const swFolder = process.env.SWF_FOLDER;
+const stFolder = process.env.STORE_FOLDER;
+const clFolder = process.env.CLIENT_FOLDER;
 const eta = require("eta");
 
 function toAttrString(table) {
@@ -18,17 +21,13 @@ module.exports = function (req, res, url) {
 	if (req.method != 'GET') return;
 	const query = url.query;
 
-	// parse urls for the lvm
-	const SWF_URL = process.env.SWF_URL.replace("127.0.0.1", "localhost");
-	const STORE_URL = process.env.STORE_URL.replace("127.0.0.1", "localhost");
-	const CLIENT_URL = process.env.CLIENT_URL.replace("127.0.0.1", "localhost");
 	var attrs, params, title, filename;
 	switch (url.pathname) {
 		case "/cc": {
 			title = "Character Creator";
 			filename = "char";
 			attrs = {
-				data: SWF_URL + "/cc.swf", // data: "cc.swf",
+				data: swFolder + "/cc.swf", // data: "cc.swf",
 				type: "application/x-shockwave-flash", 
 				id: "char_creator", 
 				width: "960", 
@@ -50,11 +49,11 @@ module.exports = function (req, res, url) {
 					"ctc": "go",
 					"tlang": "en_US",
 					"apiserver": "/",
-					"storePath": STORE_URL + "/<store>",
-					"clientThemePath": CLIENT_URL + "/<client_theme>"
+					"storePath": stFolder + "/<store>",
+					"clientThemePath": clFolder + "/<client_theme>"
 				},
 				allowScriptAccess: "always",
-				movie: SWF_URL + "/cc.swf", // "http://localhost/cc.swf"
+				movie: swFolder + "/cc.swf", // "http://localhost/cc.swf"
 			};
 			break;
 		}
@@ -63,7 +62,7 @@ module.exports = function (req, res, url) {
 			title = "CC Browser";
 			filename = "char";
 			attrs = {
-				data: SWF_URL + "/cc_browser.swf", // data: 'cc_browser.swf',
+				data: swFolder + "/cc_browser.swf", // data: 'cc_browser.swf',
 				type: "application/x-shockwave-flash",
 				id: "char_creator",
 				width: '100%', 
@@ -73,8 +72,8 @@ module.exports = function (req, res, url) {
 			params = {
 				flashvars: {
 					apiserver: "/",
-					storePath: STORE_URL + "/<store>",
-					clientThemePath: CLIENT_URL + "/<client_theme>",
+					storePath: stFolder + "/<store>",
+					clientThemePath: clFolder + "/<client_theme>",
 					original_asset_id: query["id"] || null,
 					themeId: "family",
 					ut: 60,
@@ -91,7 +90,7 @@ module.exports = function (req, res, url) {
 					lid: 13,
 				},
 				allowScriptAccess: "always",
-				movie: SWF_URL + "/cc_browser.swf", // 'http://localhost/cc_browser.swf'
+				movie: swFolder + "/cc_browser.swf", // 'http://localhost/cc_browser.swf'
 			};
 			break;
 		}
@@ -100,7 +99,7 @@ module.exports = function (req, res, url) {
 			title = "Video Editor";
 			filename = "studio";
 			attrs = {
-				data: SWF_URL + "/go_full.swf",
+				data: swFolder + "/go_full.swf",
 				type: "application/x-shockwave-flash", width: "100%", height: "100%",
 			};
 			params = {
@@ -120,8 +119,8 @@ module.exports = function (req, res, url) {
 					tlang: "en_US",
 					ut: 60,
 					apiserver: "/",
-					storePath: STORE_URL + "/<store>",
-					clientThemePath: CLIENT_URL + "/<client_theme>",
+					storePath: stFolder + "/<store>",
+					clientThemePath: clFolder + "/<client_theme>",
 				},
 				allowScriptAccess: "always",
 			};
@@ -132,13 +131,13 @@ module.exports = function (req, res, url) {
 			title = 'Video Player';
 			filename = "player";
 			attrs = {
-				data: SWF_URL + '/player.swf',
+				data: swFolder + '/player.swf',
 				type: 'application/x-shockwave-flash', width: '100%', height: '100%',
 			};
 			params = {
 				flashvars: {
-					'apiserver': '/', 'storePath': STORE_URL + '/<store>', 'ut': 60,
-					'autostart': 1, 'isWide': 1, 'clientThemePath': CLIENT_URL + '/<client_theme>',
+					'apiserver': '/', 'storePath': stFolder + '/<store>', 'ut': 60,
+					'autostart': 1, 'isWide': 1, 'clientThemePath': clFolder + '/<client_theme>',
 				},
 				allowScriptAccess: 'always',
 				allowFullScreen: 'true',

@@ -29,6 +29,7 @@ This changelog is based off [Keep a Changelog](https://keepachangelog.com) and ~
   - Removed Victoria from MCW
   - Removed source code (get it online)
   - Node.js installer is now 17.7.1
+  - Included FFDec is now 15.1.0
 ### Fixed
   - Polly voices
   - Acapela voices (thanks VisualPlugin!)

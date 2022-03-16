@@ -1,19 +1,5 @@
 {
 	"GET": {
-		"/index.html": {
-			"headers": {
-				"Location": "pages/html/list.html"
-			},
-			"statusCode": 302,
-			"content": ""
-		},
-		"/$": {
-			"headers": {
-				"Location": "pages/html/list.html"
-			},
-			"statusCode": 302,
-			"content": ""
-		},
 		"/goapi/getAssetTags": {
 			"headers": {
 				"Content-Type": "application/json"
@@ -38,41 +24,6 @@
 		"favicon.ico": {},
 		"char_default.png": {
 			"content": ""
-		},
-		"pages/html/(.*)": {
-			"headers": {
-				"Content-Type": "text/html; charset=UTF-8"
-			}
-		},
-		"pages/css/(.*)": {
-			"headers": {
-				"Content-Type": "text/css; charset=UTF-8"
-			}
-		},
-		"pages/fonts/(.*)": {
-			"headers": {
-				"Content-Type": "application/font-woff; charset=UTF-8"
-			}
-		},
-		"pages/img/(.*)(png|PNG)$": {
-			"headers": {
-				"Content-Type": "image/png"
-			}
-		},
-		"pages/img/(.*)(jpg|JPG|jpeg|JPEG)$": {
-			"headers": {
-				"Content-Type": "image/jpeg"
-			}
-		},
-		"pages/img/(.*)(svg|SVG)$": {
-			"headers": {
-				"Content-Type": "image/svg+xml; charset=UTF-8"
-			}
-		},
-		"pages/js/(.*)": {
-			"headers": {
-				"Content-Type": "text/javascript; charset=UTF-8"
-			}
 		}
 	},
 	"POST": {
